@@ -1,7 +1,8 @@
 package com.rest.ws.primaryApp.service;
 
 import com.rest.ws.primaryApp.model.dto.UserDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService {
-    public UserDto createUser(UserDto userDto);
+public interface UserService extends UserDetailsService {
+    UserDto createUser(UserDto userDto);
 }
