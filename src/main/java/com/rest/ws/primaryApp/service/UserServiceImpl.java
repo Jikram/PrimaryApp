@@ -1,5 +1,6 @@
 package com.rest.ws.primaryApp.service;
 
+
 import com.rest.ws.primaryApp.model.dto.UserDto;
 import com.rest.ws.primaryApp.model.entity.UserEntity;
 import com.rest.ws.primaryApp.repository.UserRepository;
