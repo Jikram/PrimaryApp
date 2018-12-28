@@ -2,8 +2,11 @@ package com.rest.ws.primaryApp.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rest.ws.primaryApp.SpringApplicationContext;
+import com.rest.ws.primaryApp.model.dto.UserDto;
 import com.rest.ws.primaryApp.model.requests.UserLoginRequestModel;
 
+import com.rest.ws.primaryApp.service.UserService;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -64,7 +67,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET)
                 .compact();
 
+        UserService userService = (UserService)SpringApplicationContext.getBean("userServiceImpl");
+        UserDto userDto = userService.getUser(username);
+
         response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
+        response.addHeader("UserID", userDto.getUserId());
+
 
     }
 }

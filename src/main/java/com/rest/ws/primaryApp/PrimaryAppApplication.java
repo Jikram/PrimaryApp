@@ -2,6 +2,7 @@ package com.rest.ws.primaryApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -16,5 +17,12 @@ public class PrimaryAppApplication {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public SpringApplicationContext springApplicationContext(){
+
+        return new SpringApplicationContext();
+    }
+
 
 }
