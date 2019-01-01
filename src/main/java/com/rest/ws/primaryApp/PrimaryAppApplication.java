@@ -1,5 +1,6 @@
 package com.rest.ws.primaryApp;
 
+import com.rest.ws.primaryApp.security.ApplicationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -22,6 +23,12 @@ public class PrimaryAppApplication {
     public SpringApplicationContext springApplicationContext(){
 
         return new SpringApplicationContext();
+    }
+
+    @Bean("ApplicationProperties")
+    public ApplicationProperties getAppProperties(){
+
+        return new ApplicationProperties();
     }
 
 
