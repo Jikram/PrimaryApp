@@ -6,7 +6,10 @@ import com.rest.ws.primaryApp.model.responses.UserRest;
 import com.rest.ws.primaryApp.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.awt.*;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -15,7 +18,7 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public UserRest getUser(@PathVariable("id") String id) {
 
         UserRest returnValue = new UserRest();
@@ -24,7 +27,8 @@ public class UserController {
         return returnValue;
     }
 
-    @PostMapping
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE },
+    consumes = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_XML_VALUE})
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetailsRequestModel) {
 
         UserRest returnValue = new UserRest();
