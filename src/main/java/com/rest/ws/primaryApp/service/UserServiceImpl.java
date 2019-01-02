@@ -5,6 +5,7 @@ import com.rest.ws.primaryApp.model.dto.UserDto;
 import com.rest.ws.primaryApp.model.entity.UserEntity;
 import com.rest.ws.primaryApp.repository.UserRepository;
 import com.rest.ws.primaryApp.utils.Utils;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -64,6 +65,15 @@ public class UserServiceImpl implements UserService {
         UserDto returnValue = new UserDto();
         BeanUtils.copyProperties(userEntity,returnValue);
 
+        return returnValue;
+    }
+
+    @Override
+    public UserDto getUserByUserId(String userId) {
+        UserDto returnValue = new UserDto();
+        UserEntity userEntity = userRepository.findUserByUserId(userId);
+        if(userEntity == null) throw new UsernameNotFoundException(userId);
+        BeanUtils.copyProperties(userEntity,returnValue);
         return returnValue;
     }
 
