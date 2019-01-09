@@ -1,8 +1,11 @@
 package com.rest.ws.primaryApp.service;
 
 
+import com.rest.ws.primaryApp.exception.UserServiceException;
 import com.rest.ws.primaryApp.model.dto.UserDto;
 import com.rest.ws.primaryApp.model.entity.UserEntity;
+import com.rest.ws.primaryApp.model.responses.ErrorMessage;
+import com.rest.ws.primaryApp.model.responses.ErrorMessages;
 import com.rest.ws.primaryApp.repository.UserRepository;
 import com.rest.ws.primaryApp.utils.Utils;
 import net.bytebuddy.implementation.bytecode.Throw;
@@ -75,6 +78,28 @@ public class UserServiceImpl implements UserService {
         if(userEntity == null) throw new UsernameNotFoundException(userId);
         BeanUtils.copyProperties(userEntity,returnValue);
         return returnValue;
+    }
+
+    @Override
+    public UserDto updateUser(String userId, UserDto userDto) {
+        UserDto returnValue = new UserDto();
+        UserEntity userEntity = userRepository.findUserByUserId(userId);
+        if (userEntity == null)
+            throw new UserServiceException(ErrorMessages.RECORD_NOT_FOUND.getErrorMessage());
+        userEntity.setFirstName(userDto.getFirstName());
+        userEntity.setLastName(userDto.getLastName());
+        UserEntity updatedUserDetails = userRepository.save(userEntity);
+        BeanUtils.copyProperties(updatedUserDetails,returnValue);
+        return returnValue;
+    }
+
+    @Override
+    public void deleteUser(String userId) {
+        UserEntity userEntity = userRepository.findUserByUserId(userId);
+        if (userEntity == null)
+            throw new UserServiceException(ErrorMessages.RECORD_NOT_FOUND.getErrorMessage());
+        userRepository.delete(userEntity);
+
     }
 
     @Override
