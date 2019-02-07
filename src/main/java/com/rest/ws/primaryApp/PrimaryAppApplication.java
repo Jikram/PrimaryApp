@@ -3,12 +3,20 @@ package com.rest.ws.primaryApp;
 import com.rest.ws.primaryApp.security.ApplicationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
-public class PrimaryAppApplication {
+public class PrimaryAppApplication extends SpringBootServletInitializer {
+
+    // For creating a WAR file that class extends SpringBootServletInitializer and override configure method below.
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(PrimaryAppApplication.class);
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(PrimaryAppApplication.class, args);
